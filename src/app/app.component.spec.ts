@@ -1,3 +1,4 @@
+import { CurrentWeatherComponent } from './current-weather/current-weather.component';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
@@ -9,6 +10,7 @@ describe('AppComponent', () => {
       ],
     }).compileComponents();
   });
+
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
