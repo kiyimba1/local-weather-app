@@ -2,15 +2,17 @@
     no data
 </div>
 <div>
-    <div>
-        <span>{{current.city}}, {{current.country}}</span><br />
-        <span>{{current.date | date: 'fullDate'}}</span><br />
+    <div fxLayout="row">
+        <div fxFlex="66%" class="mat-title no-margin">{{current.city}}, {{current.country}}</div><br />
+        <div fxFlex class="right mat-h3 no-margin">{{current.date | date: 'EEEE MMM d'}}</div><br />
     </div>
-    <div>
-        <img [src]='current.image'>
-        <span>{{current.temperature | number:'1.0-0'}}˚F</span>
+    <div fxLayout="row" fxLayputAlign="center center">
+        <div fxFlex="66%">
+            <img style="zoom: 175%;" [src]='current.image'>
+        </div>
+        <div class="right mat-display-3 no-margin" fxFlex>{{current.temperature | number:'1.0-0'}}˚F</div>
     </div>
-    <div>
+    <div class="mat-caption">
         {{current.description}}
     </div>
 </div>
