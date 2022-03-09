@@ -1,12 +1,13 @@
-import { CurrentWeatherComponent } from './current-weather/current-weather.component';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { createComponentMock } from 'angular-unit-test-helper'
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        createComponentMock('CurrentWeatherComponent')
       ],
     }).compileComponents();
   });
