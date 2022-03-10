@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, filter, tap } from 'rxjs/operators';
 
 import { WeatherService } from '../weather/weather.service';
 
@@ -11,23 +11,24 @@ import { WeatherService } from '../weather/weather.service';
 })
 export class CitySearchComponent implements OnInit {
 
-  search = new FormControl('', [Validators.minLength(2)])
+  search = new FormControl('', [Validators.required, Validators.minLength(2)])
 
   constructor(private weatherService: WeatherService) {
+    this.search.valueChanges.pipe(debounceTime(100), filter(() => !this.search.invalid), tap((searchValue: string) => this.doSearch(searchValue))).subscribe()
 
+  }
+
+  doSearch(searchValue: string) {
+    const userInput = searchValue.split(',').map(s => s.trim())
+    const searchText = userInput[0]
+    const country = userInput.length > 1 ? userInput[1] : undefined
+    this.weatherService.updateCurrentWeather(searchText, country)
   }
 
 
 
   ngOnInit(): void {
-    this.search.valueChanges.pipe(debounceTime(1000)).subscribe(
-      (searchValue: string) => {
-        if (searchValue) {
-          const userInput = searchValue.split(',').map(s => s.trim())
-          this.weatherService.updateCurrentWeather(userInput[0], userInput.length > 1 ? userInput[1] : undefined)
-        }
-      }
-    )
+
   }
 
 }
